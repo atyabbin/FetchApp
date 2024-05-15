@@ -1,0 +1,13 @@
+.container {
+  text-align: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+.center-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

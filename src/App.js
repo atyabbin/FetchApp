@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FetchApi.css"; // Import the CSS file for styling
+import "./FetchApi.css";
 
 export default function FetchApi() {
   const [data, setData] = useState(null);
@@ -15,8 +15,8 @@ export default function FetchApi() {
       })
       .then((json) => {
         console.log(json);
-        setData(json.record); // Accessing nested "record" key
-        setError(null); // Reset error state on successful fetch
+        setData(json.record);
+        setError(null);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -27,15 +27,11 @@ export default function FetchApi() {
   const renderAttributes = (object, prefix = "") => {
     const attributes = [];
 
-    // Check if the object is not null or undefined
     if (object && typeof object === "object") {
-      // Iterate over each key-value pair in the object
       Object.entries(object).forEach(([key, value]) => {
         if (typeof value === "object" && !Array.isArray(value)) {
-          // If the value is another object (nested), recursively render its attributes
           attributes.push(...renderAttributes(value, `${prefix}${key}.`));
         } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === "object") {
-          // If the value is an array of objects, render each object as a separate row
           value.forEach((item, index) => {
             attributes.push(
               <tr key={`${prefix}${key}.${index}`}>
@@ -45,7 +41,6 @@ export default function FetchApi() {
             );
           });
         } else {
-          // Render the attribute and its value
           attributes.push(
             <tr key={prefix + key}>
               <td>{getFormattedAttributeName(prefix + key)}</td>
@@ -65,10 +60,8 @@ export default function FetchApi() {
     } else if (typeof value === "boolean") {
       return value ? "true" : "false";
     } else if (typeof value === "object" && !Array.isArray(value)) {
-      // If the value is another object (nested), convert it to a string
       return JSON.stringify(value);
     } else if (Array.isArray(value)) {
-      // If the value is an array, convert it to a string
       return value.join(", ");
     } else {
       return value.toString();
@@ -84,25 +77,20 @@ export default function FetchApi() {
   };
 
   const getFormattedAttributeName = (name) => {
-    // Split the attribute name by '.' and extract the last part
     let attributeName = name.split('.').pop();
-    
-    // Remove any trailing numbers from the attribute name
     attributeName = attributeName.replace(/\d+$/, '');
-
-    // Convert camelCase to Title Case
     return attributeName.replace(/([A-Z])/g, ' $1').trim();
   };
 
   return (
-    <div className="container">
+    <div className="container center-table">
       <div className="fetch-button">
         <button onClick={apiGet}>FETCH</button>
       </div>
       <br />
       {error && <p>Error: {error}</p>}
       {data && (
-        <table border="1">
+        <table border="1" className="table">
           <thead>
             <tr>
               <th>Attribute</th>
@@ -110,7 +98,6 @@ export default function FetchApi() {
             </tr>
           </thead>
           <tbody>
-            {/* Render top-level attributes */}
             {renderAttributes(data)}
           </tbody>
         </table>

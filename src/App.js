@@ -84,6 +84,7 @@ export default function FetchApi() {
 
   return (
     <div className="container center-table">
+    <h1 style={{ textAlign: "center" }}>INTERNSHIP PROJECT</h1>
       <div className="fetch-button">
         <button onClick={apiGet}>FETCH</button>
       </div>

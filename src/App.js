@@ -11,7 +11,9 @@ export default function FetchApi() {
 
   const fetchData = async () => {
     try {
-      const url = generatePath(`${serverUrl}/admin/user?id=:userId&token=:token`, {
+      const urlTemplate = ":serverUrl/admin/user?id=:userId&token=:token";
+      const url = generatePath(urlTemplate, {
+        serverUrl,
         userId,
         token,
       });

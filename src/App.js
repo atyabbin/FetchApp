@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import "./FetchApi.css";
 
 export default function FetchApi() {
+  const [serverUrl, setServerUrl] = useState("");
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/admin/user?id=1580559962386439&token=VVakdu_9SLsyYzPuf4Mwdrqi0WFDz_Z9BBpNJCw9M28=");
+      const url = `${serverUrl}/admin/user?id=${userId}&token=${token}`;
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -59,8 +63,48 @@ export default function FetchApi() {
   return (
     <div className="container center-table">
       <h1 style={{ textAlign: "center", fontWeight: 'bold', marginBottom: '20px' }}>INTERNSHIP PROJECT</h1>
+      <form className="input-form">
+        <div className="input-group">
+          <label>
+            Server URL:
+            <input
+              type="text"
+              value={serverUrl}
+              onChange={(e) => setServerUrl(e.target.value)}
+              style={{ padding: '10px', margin: '10px', width: '100%' }}
+            />
+          </label>
+        </div>
+        <div className="input-group">
+          <label>
+            Token:
+            <input
+              type="text"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              style={{ padding: '10px', margin: '10px', width: '100%' }}
+            />
+          </label>
+        </div>
+        <div className="input-group">
+          <label>
+            User ID:
+            <input
+              type="text"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              style={{ padding: '10px', margin: '10px', width: '100%' }}
+            />
+          </label>
+        </div>
+      </form>
       <div className="fetch-button">
-        <button onClick={fetchData} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#009879', color: 'white', border: 'none', borderRadius: '5px' }}>FETCH</button>
+        <button
+          onClick={fetchData}
+          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#009879', color: 'white', border: 'none', borderRadius: '5px' }}
+        >
+          FETCH
+        </button>
       </div>
       <br />
       {error && <p style={{ color: 'red' }}>{`Error: ${error}`}</p>}

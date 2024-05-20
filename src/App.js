@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { generatePath } from "react-router-dom";
 import "./FetchApi.css";
 
 export default function FetchApi() {
@@ -10,7 +11,10 @@ export default function FetchApi() {
 
   const fetchData = async () => {
     try {
-      const url = `${serverUrl}/admin/user?id=${userId}&token=${token}`;
+      const url = generatePath(`${serverUrl}/admin/user?id=:userId&token=:token`, {
+        userId,
+        token,
+      });
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");

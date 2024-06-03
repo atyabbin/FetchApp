@@ -53,10 +53,16 @@ export default function FetchApi() {
           nullAttributes.push(key);
         }
         return (
-          <tr key={key}>
-            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{key}</td>
-            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{value === null ? "null" : JSON.stringify(value)}</td>
-          </tr>
+         <tr key={key}>
+  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{key}</td>
+  <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+    {key === "storage" ? 
+      (value === null ? "null" : `${(value / 1024 ** 3).toFixed(2)} GB`) :
+      (value === null ? "null" : JSON.stringify(value))
+    }
+  </td>
+</tr>
+
         );
       }
     });

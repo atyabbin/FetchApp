@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { generatePath } from "react-router-dom";
 import "./FetchApi.css";
 
 export default function FetchApi() {
@@ -11,12 +10,7 @@ export default function FetchApi() {
 
   const fetchData = async () => {
     try {
-      const urlTemplate = ":serverUrl/admin/user?id=:userId&token=:token";
-      const url = generatePath(urlTemplate, {
-        serverUrl,
-        userId,
-        token,
-      });
+      const url = `${serverUrl}/admin/user?id=${userId}&token=${token}`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -53,17 +47,10 @@ export default function FetchApi() {
           nullAttributes.push(key);
         }
         return (
-    <tr key={key}>
-  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{key}</td>
-  <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-    {key === "storage" ? 
-      (value === null ? "null" : `${(value / 1024 ** 3).toFixed(2)} GB`) :
-      (value === null ? "null" : JSON.stringify(value))
-    }
-  </td>
-</tr>
-
-
+          <tr key={key}>
+            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{key}</td>
+            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{value === null ? "null" : JSON.stringify(value)}</td>
+          </tr>
         );
       }
     });
